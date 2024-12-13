@@ -3,23 +3,23 @@
  * For licensing, see LICENSE.md.
  */
 
+
 import {
     ButtonView,
     FocusCycler,
     FocusTracker, KeystrokeHandler,
-    LabeledFieldView,
-    ClassicEditor,
-    Essentials,
-    Bold,
-    Italic,
-    Heading,
     List,
     Paragraph,
     View,
+    LabeledFieldView,
+    ClassicEditor,
+    Essentials,
     createLabeledInputText,
     icons,
-    submitHandler
-} from 'ckeditor5';
+    submitHandler,
+} from '@ckeditor/ckeditor5-core';
+import {Bold, Italic} from '@ckeditor/ckeditor5-basic-styles';
+import {Heading} from '@ckeditor/ckeditor5-heading';
 
 export default class FormView extends View {
     constructor(locale) {

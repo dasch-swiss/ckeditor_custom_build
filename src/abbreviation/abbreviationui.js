@@ -1,7 +1,7 @@
 import { ButtonView, ContextualBalloon, Plugin, clickOutsideHandler } from 'ckeditor5';
 import FormView from './abbreviationview';
 import getRangeText from './utils.js';
-import '../styles.css';
+// import '../styles.css';
 
 export default class AbbreviationUI extends Plugin {
     static get requires() {
