@@ -28,7 +28,7 @@ import SpecialCharactersMathematical from '@ckeditor/ckeditor5-special-character
 import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
-import FootNote from 'ckeditor5-footnote/src/footnote';
+import Footnote from "./footnote-plugin/footnote";
 
 class Editor extends ClassicEditor { }
 
@@ -40,7 +40,6 @@ Editor.builtinPlugins = [
     Code,
     CodeBlock,
     Essentials,
-    FootNote,
     Heading,
     HorizontalLine,
     Italic,
@@ -59,17 +58,17 @@ Editor.builtinPlugins = [
     Table,
     TableToolbar,
     TextTransformation,
-    Underline
-];
+    Underline,
+Footnote];
 
 // Editor configuration.
 Editor.defaultConfig = {
-
+    licenseKey: 'GPL',
     toolbar: {
         items: [
             'heading',
-            '|',
             'bold',
+            '|',
             'italic',
             'underline',
             'strikethrough',
@@ -94,7 +93,8 @@ Editor.defaultConfig = {
             'specialCharacters',
             '|',
             'sourceEditing',
-        ],
+            '|',
+            'footnote'],
         shouldNotGroupWhenFull: true
     },
     language: 'en',
