@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md.
  */
 
-import { Command, findAttributeRange, toMap } from 'ckeditor5';
+import { Command, findAttributeRange, toMap } from '@ckeditor/ckeditor5-core';
 import getRangeText from './utils.js';
 
 export default class AbbreviationCommand extends Command {
