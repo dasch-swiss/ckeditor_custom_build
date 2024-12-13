@@ -1,5 +1,5 @@
 sample/*
 .idea/*
-build/*
+build
 node_modules
 .DS_Store
