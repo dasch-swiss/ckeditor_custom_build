@@ -28,6 +28,7 @@ import SpecialCharactersMathematical from '@ckeditor/ckeditor5-special-character
 import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
+import Abbreviation from "./abbreviation/abbreviation";
 class Editor extends ClassicEditor { }
 
 // Plugins to include in the build.
@@ -58,6 +59,7 @@ Editor.builtinPlugins = [
     TableToolbar,
     TextTransformation,
     Underline,
+    Abbreviation
 ];
 
 // Editor configuration.
