@@ -1,4 +1,5 @@
-import { ButtonView, ContextualBalloon, Plugin, clickOutsideHandler } from '@ckeditor/ckeditor5-core';
+import { ContextualBalloon, Plugin, clickOutsideHandler } from '@ckeditor/ckeditor5-core';
+import { ButtonView } from '@ckeditor/ckeditor5-ui';
 import FormView from './abbreviationview';
 import getRangeText from './utils.js';
 // import '../styles.css';

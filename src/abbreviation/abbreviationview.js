@@ -8,16 +8,16 @@ import {
     ButtonView,
     FocusCycler,
     FocusTracker, KeystrokeHandler,
-    List,
-    Paragraph,
     View,
     LabeledFieldView,
-    ClassicEditor,
-    Essentials,
     createLabeledInputText,
     icons,
     submitHandler,
-} from '@ckeditor/ckeditor5-core';
+} from '@ckeditor/ckeditor5-ui';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
+import {Paragraph} from "@ckeditor/ckeditor5-paragraph";
+import {List} from "@ckeditor/ckeditor5-list";
+import {Essentials} from "@ckeditor/ckeditor5-essentials";
 import {Bold, Italic} from '@ckeditor/ckeditor5-basic-styles';
 import {Heading} from '@ckeditor/ckeditor5-heading';
 
