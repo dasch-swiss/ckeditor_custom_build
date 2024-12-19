@@ -66,6 +66,7 @@ Editor.defaultConfig = {
         items: [
             'heading',
             '|',
+            'abbreviation',
             'bold',
             'italic',
             'underline',
