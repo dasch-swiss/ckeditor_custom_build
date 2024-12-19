@@ -39,7 +39,6 @@ Editor.builtinPlugins = [
     Code,
     CodeBlock,
     Essentials,
-    FootNote,
     Heading,
     HorizontalLine,
     Italic,
@@ -58,9 +57,7 @@ Editor.builtinPlugins = [
     Table,
     TableToolbar,
     TextTransformation,
-    Underline,
-    Abbreviation
-];
+    Underline];
 
 // Editor configuration.
 Editor.defaultConfig = {
@@ -93,9 +90,7 @@ Editor.defaultConfig = {
             'insertTable',
             'specialCharacters',
             '|',
-            'sourceEditing',
-            'abbreviation'
-        ],
+            'sourceEditing'],
         shouldNotGroupWhenFull: true
     },
     language: 'en',
