@@ -91,12 +91,14 @@ export default class FormView extends View {
         this.element.appendChild(contentEditorElement);
 
 
+        console.log('created', contentEditorElement);
         ClassicEditor.create(contentEditorElement, {
             plugins: [Essentials, Bold, Italic, Heading, List, Paragraph],
             toolbar: ['heading', '|', 'bold', 'italic', 'numberedList', 'bulletedList']
         })
             .then(editor => {
                 this.contentEditor = editor;
+                console.log('contenteditor', editor);
             })
             .catch(error => {
                 console.error(error);

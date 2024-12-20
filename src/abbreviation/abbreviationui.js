@@ -1,12 +1,12 @@
-import { Plugin } from '@ckeditor/ckeditor5-core';
-import { ButtonView, ContextualBalloon, clickOutsideHandler } from '@ckeditor/ckeditor5-ui';
+import {Plugin} from '@ckeditor/ckeditor5-core';
+import {ButtonView, ContextualBalloon, clickOutsideHandler} from '@ckeditor/ckeditor5-ui';
 import FormView from './abbreviationview';
 import getRangeText from './utils.js';
 // import '../styles.css';
 
 export default class AbbreviationUI extends Plugin {
     static get requires() {
-        return [ ContextualBalloon ];
+        return [ContextualBalloon];
     }
 
     init() {
@@ -85,17 +85,15 @@ export default class AbbreviationUI extends Plugin {
         this.formView.abbrInputView.isEnabled = selection.getFirstRange().isCollapsed;
 
         // Fill the form using the state (value) of the command.
-        if (commandValue) {
-            this.formView.abbrInputView.fieldView.value = commandValue.abbr;
-            setTimeout(() => {
-            this.formView.contentEditor.setData(commandValue.title);
-            }, 100);
-        } else {
-            const selectedText = getRangeText(selection.getFirstRange());
-
-            this.formView.abbrInputView.fieldView.value = selectedText;
-            this.formView.contentEditor.setData('');
-        }
+        setTimeout(() => {
+            if (commandValue) {
+                this.formView.abbrInputView.fieldView.value = commandValue.abbr;
+                this.formView.contentEditor.setData(commandValue.title);
+            } else {
+                this.formView.abbrInputView.fieldView.value =  getRangeText(selection.getFirstRange());
+                this.formView.contentEditor.setData('');
+            }
+        }, 100);
 
         this.formView.focus();
     }
