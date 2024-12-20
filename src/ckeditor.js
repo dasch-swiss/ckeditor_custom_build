@@ -57,7 +57,8 @@ Editor.builtinPlugins = [
     Table,
     TableToolbar,
     TextTransformation,
-    Underline];
+    Underline,
+Abbreviation];
 
 // Editor configuration.
 Editor.defaultConfig = {
@@ -65,9 +66,9 @@ Editor.defaultConfig = {
     toolbar: {
         items: [
             'heading',
-            '|',
             'abbreviation',
             'bold',
+            '|',
             'italic',
             'underline',
             'strikethrough',

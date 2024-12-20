@@ -7,19 +7,19 @@
 import {
     ButtonView,
     FocusCycler,
-    FocusTracker, KeystrokeHandler,
     View,
     LabeledFieldView,
     createLabeledInputText,
-    icons,
     submitHandler,
 } from '@ckeditor/ckeditor5-ui';
+import {FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils';
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
 import {Paragraph} from "@ckeditor/ckeditor5-paragraph";
 import {List} from "@ckeditor/ckeditor5-list";
 import {Essentials} from "@ckeditor/ckeditor5-essentials";
 import {Bold, Italic} from '@ckeditor/ckeditor5-basic-styles';
 import {Heading} from '@ckeditor/ckeditor5-heading';
+import {icons} from '@ckeditor/ckeditor5-core';
 
 export default class FormView extends View {
     constructor(locale) {
