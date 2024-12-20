@@ -86,7 +86,12 @@ export default class FormView extends View {
 
         this.keystrokes.listenTo(this.element);
 
-        ClassicEditor.create(this.element.querySelector('.ck-content-editor'), {
+        const contentEditorElement = document.createElement('div');
+        contentEditorElement.classList.add('ck-content-editor');
+        this.element.appendChild(contentEditorElement);
+
+
+        ClassicEditor.create(contentEditorElement, {
             plugins: [Essentials, Bold, Italic, Heading, List, Paragraph],
             toolbar: ['heading', '|', 'bold', 'italic', 'numberedList', 'bulletedList']
         })
