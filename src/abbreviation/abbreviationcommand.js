@@ -3,9 +3,9 @@
  * For licensing, see LICENSE.md.
  */
 
-import { Command } from '@ckeditor/ckeditor5-core';
-import { findAttributeRange } from '@ckeditor/ckeditor5-typing';
-import { toMap } from '@ckeditor/ckeditor5-utils';
+import {Command} from '@ckeditor/ckeditor5-core';
+import {findAttributeRange} from '@ckeditor/ckeditor5-typing';
+import {toMap} from '@ckeditor/ckeditor5-utils';
 import getRangeText from './utils.js';
 
 export default class AbbreviationCommand extends Command {
@@ -15,15 +15,15 @@ export default class AbbreviationCommand extends Command {
         const firstRange = selection.getFirstRange();
 
         // When the selection is collapsed, the command has a value if the caret is in an abbreviation.
-        if ( firstRange.isCollapsed ) {
-            if ( selection.hasAttribute( 'abbreviation' ) ) {
-                const attributeValue = selection.getAttribute( 'abbreviation' );
+        if (firstRange.isCollapsed) {
+            if (selection.hasAttribute('abbreviation')) {
+                const attributeValue = selection.getAttribute('abbreviation');
 
                 // Find the entire range containing the abbreviation under the caret position.
-                const abbreviationRange = findAttributeRange( selection.getFirstPosition(), 'abbreviation', attributeValue, model );
+                const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
 
                 this.value = {
-                    abbr: getRangeText( abbreviationRange ),
+                    abbr: '[FOOTNOTE]',
                     title: attributeValue,
                     range: abbreviationRange
                 };
@@ -34,15 +34,15 @@ export default class AbbreviationCommand extends Command {
             // When the selection is not collapsed, the command has a value if the selection contains a subset of a single abbreviation
         // or an entire abbreviation.
         else {
-            if ( selection.hasAttribute( 'abbreviation' ) ) {
-                const attributeValue = selection.getAttribute( 'abbreviation' );
+            if (selection.hasAttribute('abbreviation')) {
+                const attributeValue = selection.getAttribute('abbreviation');
 
                 // Find the entire range containing the abbreviation under the caret position.
-                const abbreviationRange = findAttributeRange( selection.getFirstPosition(), 'abbreviation', attributeValue, model );
+                const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
 
-                if ( abbreviationRange.containsRange( firstRange, true ) ) {
+                if (abbreviationRange.containsRange(firstRange, true)) {
                     this.value = {
-                        abbr: getRangeText( firstRange ),
+                        abbr: getRangeText(firstRange),
                         title: attributeValue,
                         range: firstRange
                     };
@@ -55,58 +55,56 @@ export default class AbbreviationCommand extends Command {
         }
 
         // The command is enabled when the "abbreviation" attribute can be set on the current model selection.
-        this.isEnabled = model.schema.checkAttributeInSelection( selection, 'abbreviation' );
+        this.isEnabled = model.schema.checkAttributeInSelection(selection, 'abbreviation');
     }
 
 
-    execute( { abbr, content } ) {
+    execute(content) {
         const model = this.editor.model;
         const selection = model.document.selection;
 
-        model.change( writer => {
+        model.change(writer => {
             // If selection is collapsed then update the selected abbreviation or insert a new one at the place of caret.
-            if ( selection.isCollapsed ) {
+            if (selection.isCollapsed) {
                 // When a collapsed selection is inside text with the "abbreviation" attribute, update its text and title.
-                if ( this.value ) {
-                    const { end: positionAfter } = model.insertContent(
-                        writer.createText( abbr, { abbreviation: content } ),
+                if (this.value) {
+                    const {end: positionAfter} = model.insertContent(
+                        writer.createText('[FOOTNOTE]', {abbreviation: content}),
                         this.value.range
                     );
                     // Put the selection at the end of the inserted abbreviation.
-                    writer.setSelection( positionAfter );
+                    writer.setSelection(positionAfter);
                 }
-                    // If the collapsed selection is not in an existing abbreviation, insert a text node with the "abbreviation" attribute
-                    // in place of the caret. Because the selection is collapsed, the attribute value will be used as a data for text.
+                // If the collapsed selection is not in an existing abbreviation, insert a text node with the "abbreviation" attribute
+                // in place of the caret. Because the selection is collapsed, the attribute value will be used as a data for text.
                 // If the abbreviation is empty, do not do anything.
-                else if ( abbr !== '' ) {
-                    const firstPosition = selection.getFirstPosition();
+                const firstPosition = selection.getFirstPosition();
 
-                    // Collect all attributes of the user selection (could be "bold", "italic", etc.)
-                    const attributes = toMap( selection.getAttributes() );
+                // Collect all attributes of the user selection (could be "bold", "italic", etc.)
+                const attributes = toMap(selection.getAttributes());
 
-                    // Put the new attribute to the map of attributes.
-                    attributes.set( 'abbreviation', content );
+                // Put the new attribute to the map of attributes.
+                attributes.set('abbreviation', content);
 
-                    // Inject the new text node with the abbreviation text with all selection attributes.
-                    const { end: positionAfter } = model.insertContent( writer.createText( abbr, attributes ), firstPosition );
+                // Inject the new text node with the abbreviation text with all selection attributes.
+                const {end: positionAfter} = model.insertContent(writer.createText('[FOOTNOTE]', attributes), firstPosition);
 
-                    // Put the selection at the end of the inserted abbreviation. Using an end of a range returned from
-                    // insertContent() just in case nodes with the same attributes were merged.
-                    writer.setSelection( positionAfter );
-                }
+                // Put the selection at the end of the inserted abbreviation. Using an end of a range returned from
+                // insertContent() just in case nodes with the same attributes were merged.
+                writer.setSelection(positionAfter);
 
                 // Remove the "abbreviation" attribute attribute from the selection. It stops adding a new content into the abbreviation
                 // if the user starts to type.
-                writer.removeSelectionAttribute( 'abbreviation' );
+                writer.removeSelectionAttribute('abbreviation');
             } else {
                 // If the selection has non-collapsed ranges, change the attribute on nodes inside those ranges
                 // omitting nodes where the "abbreviation" attribute is disallowed.
-                const ranges = model.schema.getValidRanges( selection.getRanges(), 'abbreviation' );
+                const ranges = model.schema.getValidRanges(selection.getRanges(), 'abbreviation');
 
-                for ( const range of ranges ) {
-                    writer.setAttribute( 'abbreviation', content, range );
+                for (const range of ranges) {
+                    writer.setAttribute('abbreviation', content, range);
                 }
             }
-        } );
+        });
     }
 }

@@ -34,6 +34,7 @@ export default class AbbreviationEditing extends Plugin {
             // and the DowncastWriter
             view: ( modelAttributeValue, conversionApi ) => {
                 const { writer } = conversionApi;
+                console.log('julien downcast', modelAttributeValue);
                 return writer.createAttributeElement( 'abbr', {
                     content: modelAttributeValue
                 } );
@@ -51,6 +52,7 @@ export default class AbbreviationEditing extends Plugin {
 
                 // Callback function provides access to the view element
                 value: viewElement => {
+                    console.log('julien upcast', viewElement.getAttribute('content'));
                     return viewElement.getAttribute( 'content' );
                 }
             }

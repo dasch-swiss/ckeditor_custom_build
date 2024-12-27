@@ -1,7 +1,6 @@
 import {Plugin} from '@ckeditor/ckeditor5-core';
 import {ButtonView, ContextualBalloon, clickOutsideHandler} from '@ckeditor/ckeditor5-ui';
 import FormView from './abbreviationview';
-import getRangeText from './utils.js';
 // import '../styles.css';
 
 export default class AbbreviationUI extends Plugin {
@@ -19,7 +18,7 @@ export default class AbbreviationUI extends Plugin {
         editor.ui.componentFactory.add('abbreviation', () => {
             const button = new ButtonView();
 
-            button.label = 'Abbreviation';
+            button.label = 'Footnote';
             button.tooltip = true;
             button.withText = true;
 
@@ -39,11 +38,7 @@ export default class AbbreviationUI extends Plugin {
         // Execute the command after clicking the "Save" button.
         this.listenTo(formView, 'submit', () => {
             // Grab values from the abbreviation and content input fields.
-            const value = {
-                abbr: formView.abbrInputView.fieldView.element.value,
-                content: formView.contentEditor.getData()
-            };
-            editor.execute('addAbbreviation', value);
+            editor.execute('addAbbreviation', formView.contentEditor.getData());
 
             // Hide the form view after submit.
             this._hideUI();
@@ -71,8 +66,6 @@ export default class AbbreviationUI extends Plugin {
     }
 
     _showUI() {
-        const selection = this.editor.model.document.selection;
-
         // Check the value of the command.
         const commandValue = this.editor.commands.get('addAbbreviation').value;
 
@@ -81,16 +74,12 @@ export default class AbbreviationUI extends Plugin {
             position: this._getBalloonPositionData()
         });
 
-        // Disable the input when the selection is not collapsed.
-        this.formView.abbrInputView.isEnabled = selection.getFirstRange().isCollapsed;
 
         // Fill the form using the state (value) of the command.
         setTimeout(() => {
             if (commandValue) {
-                this.formView.abbrInputView.fieldView.value = commandValue.abbr;
                 this.formView.contentEditor.setData(commandValue.title);
             } else {
-                this.formView.abbrInputView.fieldView.value =  getRangeText(selection.getFirstRange());
                 this.formView.contentEditor.setData('');
             }
         }, 100);
@@ -100,7 +89,6 @@ export default class AbbreviationUI extends Plugin {
 
     _hideUI() {
         // Clear the input field values and reset the form.
-        this.formView.abbrInputView.fieldView.value = '';
         this.formView.contentEditor.setData('');
         this.formView.element.reset();
 

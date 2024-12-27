@@ -8,11 +8,9 @@ import {
     ButtonView,
     FocusCycler,
     View,
-    LabeledFieldView,
-    createLabeledInputText,
     submitHandler,
 } from '@ckeditor/ckeditor5-ui';
-import {FocusTracker, KeystrokeHandler } from '@ckeditor/ckeditor5-utils';
+import {FocusTracker, KeystrokeHandler} from '@ckeditor/ckeditor5-utils';
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
 import {Paragraph} from "@ckeditor/ckeditor5-paragraph";
 import {List} from "@ckeditor/ckeditor5-list";
@@ -28,7 +26,6 @@ export default class FormView extends View {
         this.focusTracker = new FocusTracker();
         this.keystrokes = new KeystrokeHandler();
 
-        this.abbrInputView = this._createInput('Add abbreviation');
         this.contentEditor = null;
 
         this.saveButtonView = this._createButton('Save', icons.check, 'ck-button-save');
@@ -38,7 +35,6 @@ export default class FormView extends View {
         this.cancelButtonView.delegate('execute').to(this, 'cancel');
 
         this.childViews = this.createCollection([
-            this.abbrInputView,
             this.saveButtonView,
             this.cancelButtonView
         ]);
@@ -60,7 +56,6 @@ export default class FormView extends View {
                 tabindex: '-1'
             },
             children: [
-                this.abbrInputView,
                 {
                     tag: 'div',
                     attributes: {
@@ -117,17 +112,9 @@ export default class FormView extends View {
     }
 
     focus() {
-        if (this.abbrInputView.isEnabled) {
-            this.abbrInputView.focus();
-        } else if (this.contentEditor) {
+        if (this.contentEditor) {
             this.contentEditor.editing.view.focus();
         }
-    }
-
-    _createInput(label) {
-        const labeledInput = new LabeledFieldView(this.locale, createLabeledInputText);
-        labeledInput.label = label;
-        return labeledInput;
     }
 
     _createButton(label, icon, className) {
