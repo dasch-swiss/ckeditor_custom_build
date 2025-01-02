@@ -5,6 +5,7 @@
 
 import { Plugin } from '@ckeditor/ckeditor5-core';
 import AbbreviationCommand from './abbreviationcommand';
+import {escapeHtml, unescapeHtml} from "./encoding";
 
 export default class AbbreviationEditing extends Plugin {
     init() {
@@ -34,9 +35,8 @@ export default class AbbreviationEditing extends Plugin {
             // and the DowncastWriter
             view: ( modelAttributeValue, conversionApi ) => {
                 const { writer } = conversionApi;
-                console.log('julien downcast', modelAttributeValue);
                 return writer.createAttributeElement( 'abbr', {
-                    content: modelAttributeValue
+                    content: modelAttributeValue ? escapeHtml(modelAttributeValue) : null
                 } );
             }
         } );
@@ -52,8 +52,7 @@ export default class AbbreviationEditing extends Plugin {
 
                 // Callback function provides access to the view element
                 value: viewElement => {
-                    console.log('julien upcast', viewElement.getAttribute('content'));
-                    return viewElement.getAttribute( 'content' );
+                    return unescapeHtml(viewElement.getAttribute( 'content' ));
                 }
             }
         } );
