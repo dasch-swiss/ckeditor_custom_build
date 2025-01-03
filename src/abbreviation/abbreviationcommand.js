@@ -64,6 +64,7 @@ export default class AbbreviationCommand extends Command {
         const selection = model.document.selection;
 
         model.change(writer => {
+
             // If selection is collapsed then update the selected abbreviation or insert a new one at the place of caret.
             if (selection.isCollapsed) {
                 // When a collapsed selection is inside text with the "abbreviation" attribute, update its text and title.
@@ -78,21 +79,22 @@ export default class AbbreviationCommand extends Command {
                 // If the collapsed selection is not in an existing abbreviation, insert a text node with the "abbreviation" attribute
                 // in place of the caret. Because the selection is collapsed, the attribute value will be used as a data for text.
                 // If the abbreviation is empty, do not do anything.
-                const firstPosition = selection.getFirstPosition();
+                else {
+                    const firstPosition = selection.getFirstPosition();
 
-                // Collect all attributes of the user selection (could be "bold", "italic", etc.)
-                const attributes = toMap(selection.getAttributes());
+                    // Collect all attributes of the user selection (could be "bold", "italic", etc.)
+                    const attributes = toMap(selection.getAttributes());
 
-                // Put the new attribute to the map of attributes.
-                attributes.set('abbreviation', content);
+                    // Put the new attribute to the map of attributes.
+                    attributes.set('abbreviation', content);
 
-                // Inject the new text node with the abbreviation text with all selection attributes.
-                const {end: positionAfter} = model.insertContent(writer.createText('[FOOTNOTE]', attributes), firstPosition);
+                    // Inject the new text node with the abbreviation text with all selection attributes.
+                    const {end: positionAfter} = model.insertContent(writer.createText('[FOOTNOTE]', attributes), firstPosition);
 
-                // Put the selection at the end of the inserted abbreviation. Using an end of a range returned from
-                // insertContent() just in case nodes with the same attributes were merged.
-                writer.setSelection(positionAfter);
-
+                    // Put the selection at the end of the inserted abbreviation. Using an end of a range returned from
+                    // insertContent() just in case nodes with the same attributes were merged.
+                    writer.setSelection(positionAfter);
+                }
                 // Remove the "abbreviation" attribute attribute from the selection. It stops adding a new content into the abbreviation
                 // if the user starts to type.
                 writer.removeSelectionAttribute('abbreviation');

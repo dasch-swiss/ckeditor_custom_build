@@ -35,7 +35,7 @@ export default class AbbreviationEditing extends Plugin {
             // and the DowncastWriter
             view: ( modelAttributeValue, conversionApi ) => {
                 const { writer } = conversionApi;
-                return writer.createAttributeElement( 'abbr', {
+                return writer.createAttributeElement( 'footnote', {
                     content: modelAttributeValue ? escapeHtml(modelAttributeValue) : null
                 } );
             }
@@ -44,7 +44,7 @@ export default class AbbreviationEditing extends Plugin {
         // Conversion from a view element to a model attribute
         conversion.for( 'upcast' ).elementToAttribute( {
             view: {
-                name: 'abbr',
+                name: 'footnote',
                 attributes: [ 'content' ]
             },
             model: {

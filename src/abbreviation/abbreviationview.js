@@ -83,17 +83,15 @@ export default class FormView extends View {
 
         const contentEditorElement = document.createElement('div');
         contentEditorElement.classList.add('ck-content-editor');
-        this.element.appendChild(contentEditorElement);
+        this.element.insertBefore(contentEditorElement, this.element.firstChild);
 
 
-        console.log('created', contentEditorElement);
         ClassicEditor.create(contentEditorElement, {
             plugins: [Essentials, Bold, Italic, Heading, List, Paragraph],
             toolbar: ['heading', '|', 'bold', 'italic', 'numberedList', 'bulletedList']
         })
             .then(editor => {
                 this.contentEditor = editor;
-                console.log('contenteditor', editor);
             })
             .catch(error => {
                 console.error(error);

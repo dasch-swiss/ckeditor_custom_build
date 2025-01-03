@@ -66,7 +66,6 @@ Editor.defaultConfig = {
     toolbar: {
         items: [
             'heading',
-            'abbreviation',
             'bold',
             '|',
             'italic',
@@ -80,6 +79,7 @@ Editor.defaultConfig = {
             'undo',
             'redo',
             '-',
+            'abbreviation',
             'link',
             '|',
             'bulletedList',
