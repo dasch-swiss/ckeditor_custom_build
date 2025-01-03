@@ -4,11 +4,11 @@
  */
 
 import { Plugin } from '@ckeditor/ckeditor5-core';
-import AbbreviationEditing from './abbreviationediting';
-import AbbreviationUI from './abbreviationui';
+import FootnoteEditing from './footnote-editing';
+import FootnoteUi from './footnote-ui';
 
-export default class Abbreviation extends Plugin {
+export default class Footnote extends Plugin {
     static get requires() {
-        return [ AbbreviationEditing, AbbreviationUI ];
+        return [ FootnoteEditing, FootnoteUi ];
     }
 }

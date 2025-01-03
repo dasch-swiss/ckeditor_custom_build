@@ -8,7 +8,7 @@ import {findAttributeRange} from '@ckeditor/ckeditor5-typing';
 import {toMap} from '@ckeditor/ckeditor5-utils';
 import getRangeText from './utils.js';
 
-export default class AbbreviationCommand extends Command {
+export default class FootnoteCommand extends Command {
     refresh() {
         const model = this.editor.model;
         const selection = model.document.selection;

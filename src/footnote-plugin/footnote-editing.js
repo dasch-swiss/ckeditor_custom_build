@@ -4,16 +4,16 @@
  */
 
 import { Plugin } from '@ckeditor/ckeditor5-core';
-import AbbreviationCommand from './abbreviationcommand';
+import FootnoteCommand from './footnote-command';
 import {escapeHtml, unescapeHtml} from "./encoding";
 
-export default class AbbreviationEditing extends Plugin {
+export default class FootnoteEditing extends Plugin {
     init() {
         this._defineSchema();
         this._defineConverters();
 
         this.editor.commands.add(
-            'addAbbreviation', new AbbreviationCommand( this.editor )
+            'addAbbreviation', new FootnoteCommand( this.editor )
         );
     }
     _defineSchema() {

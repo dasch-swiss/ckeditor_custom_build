@@ -1,9 +1,9 @@
 import {Plugin} from '@ckeditor/ckeditor5-core';
 import {ButtonView, ContextualBalloon, clickOutsideHandler} from '@ckeditor/ckeditor5-ui';
-import FormView from './abbreviationview';
+import FormView from './footnote-view';
 // import '../styles.css';
 
-export default class AbbreviationUI extends Plugin {
+export default class FootnoteUi extends Plugin {
     static get requires() {
         return [ContextualBalloon];
     }
