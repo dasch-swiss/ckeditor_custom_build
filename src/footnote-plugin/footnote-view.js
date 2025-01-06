@@ -53,12 +53,20 @@ export default class FormView extends View {
         this.setTemplate({
             tag: 'form',
             attributes: {
-                class: 'footnote-form',
+                style: 'width: 500px!important;',
                 tabindex: '-1'
             },
             children: [
-                this.saveButtonView,
-                this.cancelButtonView
+                {
+                    tag: 'div',
+                    attributes: {
+                        style: 'display: flex; justify-content: flex-end; passing: 4px'
+                    },
+                    children: [
+                        this.cancelButtonView,
+                        this.saveButtonView,
+                    ]
+                }
             ]
         });
     }

@@ -31,15 +31,15 @@ export default class FootnoteUi extends Plugin {
             return button;
         });
 
-            // Listen for click events on the editor's view document.
-            this.listenTo(editor.editing.view.document, 'click', (evt, data) => {
-                const domEvent = data.domEvent;
-                const target = domEvent.target;
+        // Listen for click events on the editor's view document.
+        this.listenTo(editor.editing.view.document, 'click', (evt, data) => {
+            const domEvent = data.domEvent;
+            const target = domEvent.target;
 
-                if (target.tagName === 'FOOTNOTE') {
-                    this._showUI();
-                }
-            });
+            if (target.tagName === 'FOOTNOTE') {
+                this._showUI();
+            }
+        });
     }
 
     _createFormView() {
@@ -63,9 +63,11 @@ export default class FootnoteUi extends Plugin {
         // Hide the form view when clicking outside the balloon.
         clickOutsideHandler({
             emitter: formView,
-            activator: () => this._balloon.visibleView === formView,
+            activator: () => this._balloon.visibleView === formView && !this._multipleBalloonsOpened(),
             contextElements: [this._balloon.view.element],
-            callback: () => this._hideUI()
+            callback: () => {
+                this._hideUI();
+            }
         });
 
         formView.keystrokes.set('Esc', (data, cancel) => {
@@ -74,6 +76,15 @@ export default class FootnoteUi extends Plugin {
         });
 
         return formView;
+    }
+
+    _multipleBalloonsOpened() {
+        const visibleBalloonPanels = document.getElementsByClassName('ck-balloon-panel_visible');
+        const filteredBalloonPanels = Array.from(visibleBalloonPanels).filter(element =>
+            !element.classList.contains('ck-powered-by-balloon')
+        );
+
+        return filteredBalloonPanels.length > 1;
     }
 
     _showUI() {
