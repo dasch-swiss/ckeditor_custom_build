@@ -80,7 +80,6 @@ Editor.defaultConfig = {
             'undo',
             'redo',
             '-',
-            'abbreviation',
             'link',
             '|',
             'bulletedList',
@@ -93,7 +92,9 @@ Editor.defaultConfig = {
             'insertTable',
             'specialCharacters',
             '|',
-            'sourceEditing'],
+            'sourceEditing',
+            '|',
+            'abbreviation'],
         shouldNotGroupWhenFull: true
     },
     language: 'en',

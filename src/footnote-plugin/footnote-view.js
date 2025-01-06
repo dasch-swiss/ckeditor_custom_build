@@ -18,6 +18,7 @@ import {Essentials} from "@ckeditor/ckeditor5-essentials";
 import {Bold, Italic} from '@ckeditor/ckeditor5-basic-styles';
 import {Heading} from '@ckeditor/ckeditor5-heading';
 import {icons} from '@ckeditor/ckeditor5-core';
+import {Link} from "@ckeditor/ckeditor5-link";
 
 export default class FormView extends View {
     constructor(locale) {
@@ -52,6 +53,7 @@ export default class FormView extends View {
         this.setTemplate({
             tag: 'form',
             attributes: {
+                class: 'footnote-form',
                 tabindex: '-1'
             },
             children: [
@@ -81,8 +83,16 @@ export default class FormView extends View {
 
         ClassicEditor.create(contentEditorElement, {
             licenseKey: 'GPL',
-            plugins: [Essentials, Bold, Italic, Heading, List, Paragraph],
-            toolbar: ['heading', '|', 'bold', 'italic', 'numberedList', 'bulletedList'],
+            plugins: [Essentials, Bold, Italic, Heading, List,  Link, Paragraph],
+            toolbar: [
+                'bold',
+                'italic',
+                '|',
+                'link',
+                '|',
+                'undo',
+                'redo',
+               ]
         })
             .then(editor => {
                 this.contentEditor = editor;
