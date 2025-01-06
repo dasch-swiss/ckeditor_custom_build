@@ -52,16 +52,9 @@ export default class FormView extends View {
         this.setTemplate({
             tag: 'form',
             attributes: {
-                class: ['ck', 'ck-abbr-form'],
                 tabindex: '-1'
             },
             children: [
-                {
-                    tag: 'div',
-                    attributes: {
-                        class: 'ck-content-editor'
-                    }
-                },
                 this.saveButtonView,
                 this.cancelButtonView
             ]
@@ -87,11 +80,13 @@ export default class FormView extends View {
 
 
         ClassicEditor.create(contentEditorElement, {
+            licenseKey: 'GPL',
             plugins: [Essentials, Bold, Italic, Heading, List, Paragraph],
-            toolbar: ['heading', '|', 'bold', 'italic', 'numberedList', 'bulletedList']
+            toolbar: ['heading', '|', 'bold', 'italic', 'numberedList', 'bulletedList'],
         })
             .then(editor => {
                 this.contentEditor = editor;
+                this.element.getElementsByClassName('ck-editor__main')[0].classList.add('ck-reset_all-excluded');
             })
             .catch(error => {
                 console.error(error);

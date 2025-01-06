@@ -63,7 +63,7 @@ Footnote];
 
 // Editor configuration.
 Editor.defaultConfig = {
-
+    licenseKey: 'GPL',
     toolbar: {
         items: [
             'heading',
