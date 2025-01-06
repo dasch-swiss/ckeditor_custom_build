@@ -1,3 +1,4 @@
 .ck-editor__editable footnote {
     color: lightblue;
+    cursor: pointer;
 }

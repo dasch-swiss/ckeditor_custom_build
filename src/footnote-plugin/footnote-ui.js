@@ -27,8 +27,19 @@ export default class FootnoteUi extends Plugin {
                 this._showUI();
             });
 
+
             return button;
         });
+
+            // Listen for click events on the editor's view document.
+            this.listenTo(editor.editing.view.document, 'click', (evt, data) => {
+                const domEvent = data.domEvent;
+                const target = domEvent.target;
+
+                if (target.tagName === 'FOOTNOTE') {
+                    this._showUI();
+                }
+            });
     }
 
     _createFormView() {
