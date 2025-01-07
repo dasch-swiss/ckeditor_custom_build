@@ -19,7 +19,6 @@ export default class FootnoteEditing extends Plugin {
     _defineSchema() {
         const schema = this.editor.model.schema;
 
-        // Extend the text node's schema to accept the abbreviation attribute.
         schema.extend( '$text', {
             allowAttributes: [ 'abbreviation' ]
         } );

@@ -14,12 +14,9 @@ export default class FootnoteCommand extends Command {
         const selection = model.document.selection;
         const firstRange = selection.getFirstRange();
 
-        // When the selection is collapsed, the command has a value if the caret is in an abbreviation.
         if (firstRange.isCollapsed) {
             if (selection.hasAttribute('abbreviation')) {
                 const attributeValue = selection.getAttribute('abbreviation');
-
-                // Find the entire range containing the abbreviation under the caret position.
                 const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
 
                 this.value = {
@@ -31,13 +28,9 @@ export default class FootnoteCommand extends Command {
                 this.value = null;
             }
         }
-            // When the selection is not collapsed, the command has a value if the selection contains a subset of a single abbreviation
-        // or an entire abbreviation.
         else {
             if (selection.hasAttribute('abbreviation')) {
                 const attributeValue = selection.getAttribute('abbreviation');
-
-                // Find the entire range containing the abbreviation under the caret position.
                 const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
 
                 if (abbreviationRange.containsRange(firstRange, true)) {
@@ -54,7 +47,6 @@ export default class FootnoteCommand extends Command {
             }
         }
 
-        // The command is enabled when the "abbreviation" attribute can be set on the current model selection.
         this.isEnabled = model.schema.checkAttributeInSelection(selection, 'abbreviation');
     }
 
@@ -65,18 +57,14 @@ export default class FootnoteCommand extends Command {
 
         model.change(writer => {
 
-            // When a collapsed selection is inside text with the "abbreviation" attribute, update its text and title.
             if (this.value) {
                 const {end: positionAfter} = model.insertContent(
                     writer.createText('[Footnote]', {abbreviation: content}),
                     this.value.range
                 );
-                // Put the selection at the end of the inserted abbreviation.
+                // Put the selection at the end of the inserted footnote.
                 writer.setSelection(positionAfter);
             }
-                // If the collapsed selection is not in an existing abbreviation, insert a text node with the "abbreviation" attribute
-                // in place of the caret. Because the selection is collapsed, the attribute value will be used as a data for text.
-            // If the abbreviation is empty, do not do anything.
             else {
                 const lastPosition = selection.getLastPosition();
 
@@ -86,15 +74,13 @@ export default class FootnoteCommand extends Command {
                 // Put the new attribute to the map of attributes.
                 attributes.set('abbreviation', content);
 
-                // Inject the new text node with the abbreviation text with all selection attributes.
+                // Inject the new text node with the footnote text with all selection attributes.
                 const {end: positionAfter} = model.insertContent(writer.createText('[Footnote]', attributes), lastPosition);
 
-                // Put the selection at the end of the inserted abbreviation. Using an end of a range returned from
+                // Put the selection at the end of the inserted footnote. Using an end of a range returned from
                 // insertContent() just in case nodes with the same attributes were merged.
                 writer.setSelection(positionAfter);
             }
-            // Remove the "abbreviation" attribute attribute from the selection. It stops adding a new content into the abbreviation
-            // if the user starts to type.
             writer.removeSelectionAttribute('abbreviation');
         });
     }

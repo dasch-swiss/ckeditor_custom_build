@@ -65,7 +65,6 @@ export default class FootnoteUi extends Plugin {
 
         // Execute the command after clicking the "Save" button.
         this.listenTo(formView, 'submit', () => {
-            // Grab values from the abbreviation and content input fields.
             editor.execute('addAbbreviation', formView.contentEditor.getData());
 
             // Hide the form view after submit.
@@ -133,8 +132,6 @@ export default class FootnoteUi extends Plugin {
 
         this._balloon.remove(this.formView);
 
-        // Focus the editing view after inserting the abbreviation so the user can start typing the content
-        // right away and keep the editor focused.
         this.editor.editing.view.focus();
     }
 
