@@ -40,6 +40,23 @@ export default class FootnoteUi extends Plugin {
                 this._showUI();
             }
         });
+
+        editor.editing.view.document.on('keydown', (evt, data) => {
+            if (data.keyCode === 39) { // Right arrow key
+                const selection = editor.model.document.selection;
+                const position = selection.getFirstPosition();
+                const node = position.parent._children._nodes[position.parent.childCount -1];
+
+                if (position.isAtEnd) {
+                    if (node && node.hasAttribute('abbreviation')) {
+                        editor.model.change(writer => {
+                            writer.insertText(' ', writer.createPositionAt(position.parent, 'end'));
+                        });
+                        data.preventDefault();
+                    }
+                }
+            }
+        });
     }
 
     _createFormView() {
