@@ -23,7 +23,7 @@ export default class FootnoteCommand extends Command {
                 const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
 
                 this.value = {
-                    abbr: '[FOOTNOTE]',
+                    abbr: '[Footnote]',
                     title: attributeValue,
                     range: abbreviationRange
                 };
@@ -68,7 +68,7 @@ export default class FootnoteCommand extends Command {
             // When a collapsed selection is inside text with the "abbreviation" attribute, update its text and title.
             if (this.value) {
                 const {end: positionAfter} = model.insertContent(
-                    writer.createText('[FOOTNOTE]', {abbreviation: content}),
+                    writer.createText('[Footnote]', {abbreviation: content}),
                     this.value.range
                 );
                 // Put the selection at the end of the inserted abbreviation.
@@ -87,7 +87,7 @@ export default class FootnoteCommand extends Command {
                 attributes.set('abbreviation', content);
 
                 // Inject the new text node with the abbreviation text with all selection attributes.
-                const {end: positionAfter} = model.insertContent(writer.createText('[FOOTNOTE]', attributes), lastPosition);
+                const {end: positionAfter} = model.insertContent(writer.createText('[Footnote]', attributes), lastPosition);
 
                 // Put the selection at the end of the inserted abbreviation. Using an end of a range returned from
                 // insertContent() just in case nodes with the same attributes were merged.
