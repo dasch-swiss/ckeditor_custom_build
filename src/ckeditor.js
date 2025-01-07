@@ -94,7 +94,7 @@ Editor.defaultConfig = {
             '|',
             'sourceEditing',
             '|',
-            'abbreviation'],
+            'footnote'],
         shouldNotGroupWhenFull: true
     },
     language: 'en',

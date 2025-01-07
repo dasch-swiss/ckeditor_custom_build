@@ -15,25 +15,25 @@ export default class FootnoteCommand extends Command {
         const firstRange = selection.getFirstRange();
 
         if (firstRange.isCollapsed) {
-            if (selection.hasAttribute('abbreviation')) {
-                const attributeValue = selection.getAttribute('abbreviation');
-                const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
+            if (selection.hasAttribute('footnote')) {
+                const attributeValue = selection.getAttribute('footnote');
+                const range = findAttributeRange(selection.getFirstPosition(), 'footnote', attributeValue, model);
 
                 this.value = {
                     abbr: '[Footnote]',
                     title: attributeValue,
-                    range: abbreviationRange
+                    range: range
                 };
             } else {
                 this.value = null;
             }
         }
         else {
-            if (selection.hasAttribute('abbreviation')) {
-                const attributeValue = selection.getAttribute('abbreviation');
-                const abbreviationRange = findAttributeRange(selection.getFirstPosition(), 'abbreviation', attributeValue, model);
+            if (selection.hasAttribute('footnote')) {
+                const attributeValue = selection.getAttribute('footnote');
+                const range = findAttributeRange(selection.getFirstPosition(), 'footnote', attributeValue, model);
 
-                if (abbreviationRange.containsRange(firstRange, true)) {
+                if (range.containsRange(firstRange, true)) {
                     this.value = {
                         abbr: getRangeText(firstRange),
                         title: attributeValue,
@@ -47,7 +47,7 @@ export default class FootnoteCommand extends Command {
             }
         }
 
-        this.isEnabled = model.schema.checkAttributeInSelection(selection, 'abbreviation');
+        this.isEnabled = model.schema.checkAttributeInSelection(selection, 'footnote');
     }
 
 
@@ -59,7 +59,7 @@ export default class FootnoteCommand extends Command {
 
             if (this.value) {
                 const {end: positionAfter} = model.insertContent(
-                    writer.createText('[Footnote]', {abbreviation: content}),
+                    writer.createText('[Footnote]', {footnote: content}),
                     this.value.range
                 );
                 // Put the selection at the end of the inserted footnote.
@@ -72,7 +72,7 @@ export default class FootnoteCommand extends Command {
                 const attributes = toMap(selection.getAttributes());
 
                 // Put the new attribute to the map of attributes.
-                attributes.set('abbreviation', content);
+                attributes.set('footnote', content);
 
                 // Inject the new text node with the footnote text with all selection attributes.
                 const {end: positionAfter} = model.insertContent(writer.createText('[Footnote]', attributes), lastPosition);
@@ -81,7 +81,7 @@ export default class FootnoteCommand extends Command {
                 // insertContent() just in case nodes with the same attributes were merged.
                 writer.setSelection(positionAfter);
             }
-            writer.removeSelectionAttribute('abbreviation');
+            writer.removeSelectionAttribute('footnote');
         });
     }
 }

@@ -20,7 +20,7 @@ export default class FootnoteEditing extends Plugin {
         const schema = this.editor.model.schema;
 
         schema.extend( '$text', {
-            allowAttributes: [ 'abbreviation' ]
+            allowAttributes: [ 'footnote' ]
         } );
     }
     _defineConverters() {
@@ -28,7 +28,7 @@ export default class FootnoteEditing extends Plugin {
 
         // Conversion from a model attribute to a view element
         conversion.for( 'downcast' ).attributeToElement( {
-            model: 'abbreviation',
+            model: 'footnote',
 
             // Callback function provides access to the model attribute value
             // and the DowncastWriter
@@ -47,7 +47,7 @@ export default class FootnoteEditing extends Plugin {
                 attributes: [ 'content' ]
             },
             model: {
-                key: 'abbreviation',
+                key: 'footnote',
 
                 // Callback function provides access to the view element
                 value: viewElement => {

@@ -15,7 +15,7 @@ export default class FootnoteUi extends Plugin {
         this._balloon = this.editor.plugins.get(ContextualBalloon);
         this.formView = this._createFormView();
 
-        editor.ui.componentFactory.add('abbreviation', () => {
+        editor.ui.componentFactory.add('footnote', () => {
             const button = new ButtonView();
 
             button.label = 'Footnote';
@@ -48,7 +48,7 @@ export default class FootnoteUi extends Plugin {
                 const node = position.parent._children._nodes[position.parent.childCount -1];
 
                 if (position.isAtEnd) {
-                    if (node && node.hasAttribute('abbreviation')) {
+                    if (node && node.hasAttribute('footnote')) {
                         editor.model.change(writer => {
                             writer.insertText(' ', writer.createPositionAt(position.parent, 'end'));
                         });
