@@ -35,7 +35,6 @@ export default class FootnoteEditing extends Plugin {
             view: ( modelAttributeValue, conversionApi ) => {
                 const { writer } = conversionApi;
                 return writer.createAttributeElement( 'footnote', {
-                    g
                     content: modelAttributeValue ? escapeHtml(modelAttributeValue) : null
                 } );
             }
