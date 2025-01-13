@@ -50,6 +50,10 @@ npm run build
 
 This will build the CKEditor 5 to the `build` directory. You can open your browser and you should be able to see the changes you've made in the code. If not, then try to refresh also the browser cache by typing `Ctrl + R` or `Cmd + R` depending on your system.
 
+### Plugins
+The following plugins are implemented:
+- Footnote: Allow the creation of ``<footnote content="MY_CONTENT">[Footnote]</footnote>`` tags in the editor.
+
 ## What's next?
 
 Follow the guides available on <https://ckeditor.com/docs/ckeditor5/latest/framework/index.html> and enjoy the document editing.
