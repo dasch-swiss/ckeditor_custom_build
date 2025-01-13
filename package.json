@@ -14,8 +14,8 @@
     "@ckeditor/ckeditor5-basic-styles": "^44.1.0",
     "@ckeditor/ckeditor5-block-quote": "^44.1.0",
     "@ckeditor/ckeditor5-code-block": "^44.1.0",
-    "@ckeditor/ckeditor5-dev-utils": "^25.4.5",
-    "@ckeditor/ckeditor5-dev-webpack-plugin": "^25.4.5",
+    "@ckeditor/ckeditor5-dev-utils": "^43.0.1",
+    "@ckeditor/ckeditor5-dev-webpack-plugin": "^31.1.13",
     "@ckeditor/ckeditor5-editor-classic": "^44.1.0",
     "@ckeditor/ckeditor5-essentials": "^44.1.0",
     "@ckeditor/ckeditor5-heading": "^44.1.0",
@@ -37,7 +37,7 @@
     "raw-loader": "^4.0.2",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",
-    "webpack": "^4.46.0",
+    "webpack": "^5.97.1",
     "webpack-cli": "^4.9.1"
   }
 }
