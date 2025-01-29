@@ -56,6 +56,21 @@ export default class FootnoteUi extends Plugin {
                     }
                 }
             }
+
+            if (data.keyCode === 37) { // Left arrow key
+                const selection = editor.model.document.selection;
+                const position = selection.getFirstPosition();
+                const node = position.parent._children._nodes[0];  // Check the first child for footnote (move left)
+
+                if (position.isAtStart) {
+                    if (node && node.hasAttribute('footnote')) {
+                        editor.model.change(writer => {
+                            writer.insertText(' ', writer.createPositionAt(position.parent, 'start'));
+                        });
+                        data.preventDefault();
+                    }
+                }
+            }
         });
     }
 
