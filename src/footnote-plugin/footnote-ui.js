@@ -42,10 +42,29 @@ export default class FootnoteUi extends Plugin {
         });
 
         editor.editing.view.document.on('keydown', (evt, data) => {
+            const selection = editor.model.document.selection;
+            const position = selection.getFirstPosition();
+
+            const node = position.parent._children._nodes[position.parent.childCount - 1];
+
+
+            if (node && node.hasAttribute('footnote')) {
+            // Block typing (keycodes for common typing keys)
+
+                const typingKeys = [32, 65, 67, 68, 70, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 13]; // Space, alphabetic keys, Enter key, etc.
+
+                if (typingKeys.includes(data.keyCode)) {
+                    data.preventDefault(); // Prevent typing
+                }
+
+                // Prevent backspace or delete when inside footnote
+                if (data.keyCode === 8 || data.keyCode === 46) { // Backspace or Delete key
+                    data.preventDefault(); // Prevent deletion
+                }
+            }
+
             if (data.keyCode === 39) { // Right arrow key
-                const selection = editor.model.document.selection;
-                const position = selection.getFirstPosition();
-                const node = position.parent._children._nodes[position.parent.childCount -1];
+
 
                 if (position.isAtEnd) {
                     if (node && node.hasAttribute('footnote')) {
@@ -58,12 +77,10 @@ export default class FootnoteUi extends Plugin {
             }
 
             if (data.keyCode === 37) { // Left arrow key
-                const selection = editor.model.document.selection;
-                const position = selection.getFirstPosition();
-                const node = position.parent._children._nodes[0];  // Check the first child for footnote (move left)
+                const myNode = position.parent._children._nodes[0];  // Check the first child for footnote (move left)
 
                 if (position.isAtStart) {
-                    if (node && node.hasAttribute('footnote')) {
+                    if (myNode && myNode.hasAttribute('footnote')) {
                         editor.model.change(writer => {
                             const startPosition = writer.createPositionAt(position, 'start');
                             if (startPosition) {
