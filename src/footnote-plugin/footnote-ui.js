@@ -65,7 +65,10 @@ export default class FootnoteUi extends Plugin {
                 if (position.isAtStart) {
                     if (node && node.hasAttribute('footnote')) {
                         editor.model.change(writer => {
-                            writer.insertText(' ', writer.createPositionAt(position.parent, 'start'));
+                            const startPosition = writer.createPositionAt(position, 'start');
+                            if (startPosition) {
+                                writer.insertText(' ', startPosition);
+                            }
                         });
                         data.preventDefault();
                     }
