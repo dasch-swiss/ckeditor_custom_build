@@ -48,18 +48,20 @@ export default class FootnoteUi extends Plugin {
 
             const typingKeys = [32, 65, 67, 68, 70, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 13]; // Space, alphabetic keys, Enter key, etc.
             const eraseKeys = [8, 46]; // Backspace or Delete key
-            console.log('check', firstPosition, lastPosition);
+            console.log('check', firstPosition, firstPosition.index);
 
-            if ([...typingKeys, ...eraseKeys].includes(data.keyCode)) {
+            if (typingKeys.includes(data.keyCode)) {
                 const node = firstPosition.parent._children._nodes[firstPosition.index];
 
-                if (node && node.hasAttribute('footnote')) {
+                console.log('debug', firstPosition, node);
+                if (node?.hasAttribute('footnote')) {
                     console.log('in footnote', node, firstPosition);
                     data.preventDefault(); // Prevent deletion
                 }
+            } else if (eraseKeys.includes(data.keyCode)) {
+                console.log('erase', firstPosition);
             } else if (data.keyCode === 39 && firstPosition.isAtEnd) { // Right arrow key
                 const node = firstPosition.parent._children._nodes[firstPosition.parent.childCount - 1];
-
                 if (node.hasAttribute('footnote')) {
                     console.log('end', node, firstPosition);
                     editor.model.change(writer => {
@@ -70,16 +72,14 @@ export default class FootnoteUi extends Plugin {
             } else if (data.keyCode === 37) { // Left arrow key
                 const myNode = firstPosition.parent._children._nodes[0];  // Check the first child for footnote (move left)
 
-                if (firstPosition.isAtStart) {
-                    if (myNode && myNode.hasAttribute('footnote')) {
-                        editor.model.change(writer => {
-                            const startPosition = writer.createPositionAt(firstPosition, 'start');
-                            if (startPosition) {
-                                writer.insertText(' ', startPosition);
-                            }
-                        });
-                        data.preventDefault();
-                    }
+                if (firstPosition.isAtStart && myNode?.hasAttribute('footnote')) {
+                    editor.model.change(writer => {
+                        const startPosition = writer.createPositionAt(firstPosition, 'start');
+                        if (startPosition) {
+                            writer.insertText(' ', startPosition);
+                        }
+                    });
+                    data.preventDefault();
                 }
             }
         });
