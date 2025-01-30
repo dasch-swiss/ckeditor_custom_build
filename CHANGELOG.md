@@ -1,7 +1,9 @@
 # Changelog
 
+### 2.1.3
+Footnote plugin: various fixes on editing.
 ### 2.1.2
-Footnote plugin: a footnote can't be edited 
+Footnote plugin: a footnote can't be edited. 
 ### 2.1.1
 Build is included in the repository.
 ### 2.1.0

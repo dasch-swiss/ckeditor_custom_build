@@ -43,52 +43,36 @@ export default class FootnoteUi extends Plugin {
 
         editor.editing.view.document.on('keydown', (evt, data) => {
             const selection = editor.model.document.selection;
-            const position = selection.getFirstPosition();
+            const firstPosition = selection.getFirstPosition();
+            const lastPosition = selection.getLastPosition();
 
-            const node = position.parent._children._nodes[position.parent.childCount - 1];
+            const typingKeys = [32, 65, 67, 68, 70, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 13]; // Space, alphabetic keys, Enter key, etc.
+            const eraseKeys = [8, 46]; // Backspace or Delete key
 
-
-            if (node && node.hasAttribute('footnote')) {
-            // Block typing (keycodes for common typing keys)
-
-                const typingKeys = [32, 65, 67, 68, 70, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 13]; // Space, alphabetic keys, Enter key, etc.
-
-                if (typingKeys.includes(data.keyCode)) {
-                    data.preventDefault(); // Prevent typing
+            if (typingKeys.includes(data.keyCode)) {
+                const node = firstPosition.parent._children._nodes[firstPosition.index];
+                if (node?.hasAttribute('footnote')) {
+                    data.preventDefault(); // Prevent writing
                 }
-
-                // Prevent backspace or delete when inside footnote
-                if (data.keyCode === 8 || data.keyCode === 46) { // Backspace or Delete key
-                    data.preventDefault(); // Prevent deletion
+            } else if (data.keyCode === 39 && firstPosition.isAtEnd) { // Right arrow key
+                const node = firstPosition.parent._children._nodes[firstPosition.parent.childCount - 1];
+                if (node.hasAttribute('footnote')) {
+                    editor.model.change(writer => {
+                        writer.insertText(' ', writer.createPositionAt(firstPosition.parent, 'end'));
+                    });
+                    data.preventDefault();
                 }
-            }
+            } else if (data.keyCode === 37) { // Left arrow key
+                const myNode = firstPosition.parent._children._nodes[0];  // Check the first child for footnote (move left)
 
-            if (data.keyCode === 39) { // Right arrow key
-
-
-                if (position.isAtEnd) {
-                    if (node && node.hasAttribute('footnote')) {
-                        editor.model.change(writer => {
-                            writer.insertText(' ', writer.createPositionAt(position.parent, 'end'));
-                        });
-                        data.preventDefault();
-                    }
-                }
-            }
-
-            if (data.keyCode === 37) { // Left arrow key
-                const myNode = position.parent._children._nodes[0];  // Check the first child for footnote (move left)
-
-                if (position.isAtStart) {
-                    if (myNode && myNode.hasAttribute('footnote')) {
-                        editor.model.change(writer => {
-                            const startPosition = writer.createPositionAt(position, 'start');
-                            if (startPosition) {
-                                writer.insertText(' ', startPosition);
-                            }
-                        });
-                        data.preventDefault();
-                    }
+                if (firstPosition.isAtStart && myNode?.hasAttribute('footnote')) {
+                    editor.model.change(writer => {
+                        const startPosition = writer.createPositionAt(firstPosition, 'start');
+                        if (startPosition) {
+                            writer.insertText(' ', startPosition);
+                        }
+                    });
+                    data.preventDefault();
                 }
             }
         });
