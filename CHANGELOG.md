@@ -1,5 +1,7 @@
 # Changelog
 
+### 2.1.4
+Footnote plugin: add a button icon.
 ### 2.1.3
 Footnote plugin: various fixes on editing.
 ### 2.1.2
