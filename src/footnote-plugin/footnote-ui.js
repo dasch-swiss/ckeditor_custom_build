@@ -21,7 +21,13 @@ export default class FootnoteUi extends Plugin {
             button.label = 'Footnote';
             button.tooltip = true;
             button.withText = true;
-            button.icon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M440-120v-264L254-197l-57-57 187-186H120v-80h264L197-706l57-57 186 187v-264h80v264l186-187 57 57-187 186h264v80H576l187 186-57 57-186-187v264h-80Z"/></svg>';
+            button.icon = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <!-- Square Border -->
+                <rect x="0" y="-960" width="960" height="960" stroke="black" fill="transparent" stroke-width="100"/>
+                <!-- Superscript T and 1 -->
+                <text x="120" y="-250" font-family="Arial" font-size="700" fill="black">T</text>
+                <text x="600" y="-550" font-family="Arial" font-size="400" fill="black">1</text>
+            </svg>`;
 
 
             // Show the UI on button click.
